@@ -30,7 +30,7 @@ address
 city
 state
 pin_code
-
+             
 
 4) Login for customer, owner, admin
 username 
