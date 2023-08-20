@@ -8,37 +8,19 @@ public class Accounts {
 
     @Id
     private String email_id;
-
-    @Column(length = 50)
     private String first_name;
-
-    @Column(length = 50)
     private String last_name;
-
-    @Column(length = 100)
     private String password;
-
-    @Column(length = 20)
     private String contact;
-
-    @Column(length = 200)
     private String address;
-
-    @Column(length = 20)
     private String role;
-
-    @OneToOne(mappedBy = "accounts")
-    private Login login;
-
-    
-    
     
 	public Accounts() {
 		super();
 	}
 
 	public Accounts(String email_id, String first_name, String last_name, String password, String contact, String address,
-			String role, Login login) {
+			String role) {
 		super();
 		this.email_id = email_id;
 		this.first_name = first_name;
@@ -47,7 +29,6 @@ public class Accounts {
 		this.contact = contact;
 		this.address = address;
 		this.role = role;
-		this.login = login;
 	}
 
 	public String getEmail_id() {
@@ -106,19 +87,12 @@ public class Accounts {
 		this.role = role;
 	}
 
-	public Login getLogin() {
-		return login;
-	}
-
-	public void setLogin(Login login) {
-		this.login = login;
-	}
 
 	@Override
 	public String toString() {
 		return "Accounts [email_id=" + email_id + ", first_name=" + first_name + ", last_name=" + last_name
 				+ ", password=" + password + ", contact=" + contact + ", address=" + address + ", role=" + role
-				+ ", login=" + login + "]";
+				+ "]";
 	}
 
     

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.pms.RealEstate.model.Accounts;
 
 @Repository
-public interface AccountDao extends JpaRepository<Accounts,String> {
+public interface AccountDao extends JpaRepository<Accounts,Integer> {
 
 	
 	@Query(value="select * from accounts", nativeQuery=true)

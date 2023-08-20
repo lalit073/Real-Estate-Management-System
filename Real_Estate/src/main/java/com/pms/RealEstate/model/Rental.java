@@ -7,26 +7,26 @@ public class Rental {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long rental_id;
+    private int rental_id;
 
     @OneToOne
     @JoinColumn(name = "property_id")
-    private Property property;
+    private Property property;    
+    
+    private double expected_rent;
 
-    private Double expected_rent;
-
-    private Double expected_deposit;
+    private double expected_deposit;
 
     private String preferred_tenants;
-
 
 	public Rental() {
 		super();
 	}
+	
+	
+	
 
-
-
-	public Rental(Long rental_id, Property property, Double expected_rent, Double expected_deposit,
+	public Rental(int rental_id, Property property, double expected_rent, double expected_deposit,
 			String preferred_tenants) {
 		super();
 		this.rental_id = rental_id;
@@ -38,59 +38,42 @@ public class Rental {
 
 
 
-	public Long getRental_id() {
+
+	public int getRental_id() {
 		return rental_id;
 	}
 
-
-
-	public void setRental_id(Long rental_id) {
+	public void setRental_id(int rental_id) {
 		this.rental_id = rental_id;
 	}
-
-
 
 	public Property getProperty() {
 		return property;
 	}
 
-
-
 	public void setProperty(Property property) {
 		this.property = property;
 	}
 
-
-
-	public Double getExpected_rent() {
+	public double getExpected_rent() {
 		return expected_rent;
 	}
 
-
-
-	public void setExpected_rent(Double expected_rent) {
+	public void setExpected_rent(double expected_rent) {
 		this.expected_rent = expected_rent;
 	}
 
-
-
-	public Double getExpected_deposit() {
+	public double getExpected_deposit() {
 		return expected_deposit;
 	}
 
-
-
-	public void setExpected_deposit(Double expected_deposit) {
+	public void setExpected_deposit(double expected_deposit) {
 		this.expected_deposit = expected_deposit;
 	}
-
-
 
 	public String getPreferred_tenants() {
 		return preferred_tenants;
 	}
-
-
 
 	public void setPreferred_tenants(String preferred_tenants) {
 		this.preferred_tenants = preferred_tenants;
@@ -98,10 +81,12 @@ public class Rental {
 
 
 
+
 	@Override
 	public String toString() {
-		return "Rental [rental_id=" + rental_id + ", property=" + property + ", expected_rent=" + expected_rent
-				+ ", expected_deposit=" + expected_deposit + ", preferred_tenants=" + preferred_tenants + "]";
+		return "Rental [rental_id=" + rental_id +  ", property=" + property
+				+ ", expected_rent=" + expected_rent + ", expected_deposit=" + expected_deposit + ", preferred_tenants="
+				+ preferred_tenants + "]";
 	}
 
    

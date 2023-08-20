@@ -16,4 +16,6 @@ public interface PropertyDao extends JpaRepository<Property,Integer>
 	
 	@Query(value="select * from property", nativeQuery=true)
 	   List<Property> getAllDetails();
+
+	 
 }

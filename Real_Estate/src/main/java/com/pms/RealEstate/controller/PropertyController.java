@@ -1,17 +1,23 @@
 package com.pms.RealEstate.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.pms.RealEstate.model.Locality;
+import com.pms.RealEstate.model.Buying;
 import com.pms.RealEstate.model.Property;
-import com.pms.RealEstate.service.LocalityService;
+import com.pms.RealEstate.model.Rental;
+import com.pms.RealEstate.service.BuyingService;
 import com.pms.RealEstate.service.PropertyService;
+import com.pms.RealEstate.service.RentalService;
 
 @RestController
 public class PropertyController {
@@ -20,35 +26,130 @@ public class PropertyController {
 	PropertyService propertyservice;
 	
 	@Autowired
-	LocalityService localityservice;
+	RentalService rentalservice;
 	
+	@Autowired
+	BuyingService buyingservice;
+	 
+	@GetMapping("/properties")
+	public List<Property> displayAllPropertydetails()
+	     {
+	      	List<Property> list=propertyservice.getProperty();
+	      	System.out.println(list);
+	    	return list;
+	     }
 	
-	@GetMapping("/propertydetails")
-	public List<Property> displayAllPropertydetails() {
-		List<Property> list=propertyservice.getProperty();
-		System.out.println(list);
-		return list;
+	@GetMapping("/property/{id}")
+	public ResponseEntity<Property>   getById(@PathVariable int id) {
+		Property p=propertyservice.getpropertybyId(id);
+		if(p!=null) {
+		   return ResponseEntity.ok(p);
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
 		
 	}
 	
-	@PostMapping("/addproperty/{pid}")
-	public ResponseEntity<String> insertPropertyDetails(@RequestBody Property a) {
-		  propertyservice.addProperty(a);
-		  return ResponseEntity.ok("added successfully");
-	
+    @PostMapping("/addproperty")
+    public ResponseEntity<String> insertPropertyDetails(@RequestBody Property a) 
+         {
+		    propertyservice.addProperty(a);
+		    return ResponseEntity.ok("added successfully");
+	     }
+    
+    @DeleteMapping("/deleteproperty/{id}")
+    public ResponseEntity<String> deletePropertyDetails(@PathVariable int id) {
+		propertyservice.deletepropertybyId(id);
+		return ResponseEntity.ok("deleted successfully");
+		
 	}
-		  
-    @GetMapping("/localitydetails")
-			public List<Locality> displaylocality() {
-				List<Locality> local=localityservice.getlocality();
-				System.out.println(local);
-				return local;
-				
-			}
-			
-	@PostMapping("/addlocality/{pid}")
-			public ResponseEntity<String> insertLocalityDetails(@RequestBody Locality l) {
-				  localityservice.addlocality(l);
-				  return ResponseEntity.ok("added successfully");
-    }
+    
+    
+    
+    
+    
+    
+   
+    
+    @PutMapping("/propertyupdate/{id}")
+	public ResponseEntity<String> updatePropertyDetails(@RequestBody Property p) {
+		propertyservice.updateproperty(p);
+		return ResponseEntity.ok("modified successfully");
+	}
+    
+    
+ 
+        @Autowired
+        private PropertyService propertyService;
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   
+    @PostMapping("/addrentaldetails/")
+    public ResponseEntity<String> insertRentedDetails(@RequestBody Rental r) 
+         {
+		    rentalservice.addRentaldetails(r);
+		    return ResponseEntity.ok("added successfully");
+	     }
+    @PostMapping("/addbuyingdetails/")
+    public ResponseEntity<String> insertBuyingDetails(@RequestBody Buying b) 
+         {
+		    buyingservice.addBuyingdetails(b);
+		    return ResponseEntity.ok("added successfully");
+         }
+    
+
+    
+    
+    
+    
+    
+	@GetMapping("/rented-properties")
+	public List<Rental> getRentedProperties() 
+	     {
+		    return rentalservice.getAllRentedProperties();
+	     }
+	  
+	@GetMapping("/buying-properties")
+	public List<Buying> getBuyingProperties()
+	     {
+	        return buyingservice.getAllBuyingProperties();
+	     }	
 }

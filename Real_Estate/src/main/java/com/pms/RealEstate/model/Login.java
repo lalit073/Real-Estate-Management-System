@@ -8,27 +8,15 @@ public class Login {
 
     @Id
     private String email_id;
-
-    @Column(nullable = false)
     private String password;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email_id")
-    @MapsId
-    private Accounts accounts;
-
-    
-    
-    
 	public Login() {
 		super();
 	}
 
-	public Login(String email_id, String password, Accounts accounts) {
+	public Login(String email_id, String password) {
 		super();
 		this.email_id = email_id;
 		this.password = password;
-		this.accounts = accounts;
 	}
 
 	public String getEmail_id() {
@@ -47,17 +35,11 @@ public class Login {
 		this.password = password;
 	}
 
-	public Accounts getAccounts() {
-		return accounts;
-	}
 
-	public void setAccounts(Accounts accounts) {
-		this.accounts = accounts;
-	}
 
 	@Override
 	public String toString() {
-		return "Login [email_id=" + email_id + ", password=" + password + ", accounts=" + accounts + "]";
+		return "Login [email_id=" + email_id + ", password=" + password + "]";
 	}
 
     
