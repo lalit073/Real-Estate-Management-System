@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./Component/Header/Header";
+import Footer from "./Component/Footer/Footer";
+import Home from "./Component/Home/Home";
+import SignIn from "./Component/SignIn/SignIn";
+import SignUp from "./Component/SignUp/SignUp";
+import PropertyPage from "./Component/Properties/PropertyPage";
+import PostProperty from "./Component/Properties/PostProperty";
+import AdminPage from "./Component/Admin/AdminPage";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Header></Header> 
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/properties" element={<PropertyPage />} />
+          <Route path="/postproperty" element={<PostProperty />} />
+          <Route path="/admin" element={<AdminPage />} />
+          {/* Add more routes for other pages */}
+        </Routes>
+        <Footer></Footer> 
+      </div>
+    </Router>
   );
 }
 
