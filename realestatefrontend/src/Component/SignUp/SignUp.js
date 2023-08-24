@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import './SignUp.css';
+import axios from 'axios';
+import {  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState('');
@@ -8,18 +11,40 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [contact, setContact] = useState('');
   const [address, setAddress] = useState('');
+  const [role, setRole] = useState('');
 
-  const handleSubmit = (e) => {
+  const notify = () => toast("Please Enter!");
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Perform form submission logic here
-    console.log('Form submitted:', {
-      firstName,
-      lastName,
-      email,
-      password,
-      contact,
-      address
-    });
+
+    const newUser = {
+      first_name: firstName,
+      last_name: lastName,
+      email_id: email,
+      password: password,
+      contact: contact,
+      address: address,
+      role: role
+    };
+
+    try {
+      await axios.post('http://localhost:8585/register', newUser);
+      window.alert('You are registered!');
+      clearFormFields();
+    } catch (error) {
+      console.error('Registration error:', error);
+      window.alert('Registration failed. Please try again.');
+    }
+  };
+
+  const clearFormFields = () => {
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setPassword('');
+    setContact('');
+    setAddress('');
+    setRole('');
   };
 
   return (
@@ -27,6 +52,18 @@ const SignUp = () => {
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
+        <label>Role</label>
+        <select
+          name="role"
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+        >
+          <option value="">Select Role</option>
+          <option value="admin">Admin</option>
+          <option value="owner">Owner</option>
+          <option value="user">User</option>
+        </select>
+         
           <label>First Name:</label>
           <input
             type="text"
@@ -80,7 +117,8 @@ const SignUp = () => {
             required
           />
         </div>
-        <button type="submit">Sign Up</button>
+        <button onClick={notify}>Sign Up</button>
+
       </form>
     </div>
   );
