@@ -6,24 +6,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Buying {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int buying_id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int buying_id;
 
-    
-    @JsonIgnoreProperties("buying")
-    @OneToOne
-    @JoinColumn(name = "property_id")
-    private Property property;    
-    
+	@JsonIgnoreProperties("buying")
+	@OneToOne
+	@JoinColumn(name = "property_id")
+	private Property property;
 
-    private double expected_rate;
+	private double expected_rate;
 
 	public Buying() {
 		super();
@@ -36,11 +33,6 @@ public class Buying {
 		this.expected_rate = expected_rate;
 	}
 
-	
-	
-	
-	
-	
 	public int getBuying_id() {
 		return buying_id;
 	}

@@ -1,16 +1,10 @@
 package com.pms.RealEstate.service;
 
-
 import java.util.List;
-
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pms.RealEstate.dao.AccountDao;
-
 import com.pms.RealEstate.dto.LoginDto;
 import com.pms.RealEstate.model.Accounts;
 @Service
@@ -47,7 +41,40 @@ public class AccountServiceImpl implements AccountService {
 		
 	}
 
-     
+
+	@Override
+	public boolean update(Accounts a) {
+		
+		Accounts ulog=accountdao.updateUser(a.getEmail_id(),a.getPassword());
+		if(ulog!=null) {
+			ulog.setPassword(a.getPassword());
+			accountdao.save(ulog);
+			return true;
+		}
+		return false;
+	}
+	
+	
+	
+	
+	public boolean updateAccountByEmailId(String emailId, Accounts updatedAccount) {
+        Accounts existingAccount = accountdao.findById(emailId).orElse(null);
+        if (existingAccount == null) {
+            return false; // Account not found
+        }
+        existingAccount.setFirst_name(updatedAccount.getFirst_name());
+        existingAccount.setLast_name(updatedAccount.getLast_name());
+        existingAccount.setAddress(updatedAccount.getAddress());
+        existingAccount.setContact(updatedAccount.getContact());
+        existingAccount.setRole(updatedAccount.getRole());
+
+        accountdao.save(existingAccount);
+        return true;
+    }
+	
+	
+	
+	
 }
 
 	

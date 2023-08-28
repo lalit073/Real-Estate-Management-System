@@ -1,24 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "./PropertyPage.css";
 
 const PropertyPage = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const { location: searchLocation, choice: searchChoice } = location.state;
 
   const [properties, setProperties] = useState([]);
+
+  const loggedIn = sessionStorage.getItem("loggedIn")
+  const userId = sessionStorage.getItem("userId")
+  console.log(userId)
+  console.log(loggedIn)
+  
 
   useEffect(() => {
     axios
       .get(`http://localhost:8585/properties/search/${searchLocation}`)
       .then((response) => {
         setProperties(response.data);
+
+        console.log(response.data);
       })
       .catch((error) => {
         console.error("Error fetching properties:", error);
       });
   }, [searchLocation]);
+
+  const handlePropertyClick = (propertyId) => {
+    navigate(`/property/${propertyId}`);
+  };
 
   return (
     <div className="property-page">
@@ -27,11 +40,28 @@ const PropertyPage = () => {
       <div className="property-grid">
         {properties.map((property) => (
           <div key={property.property_id} className="property-card">
-            <p>{property.property_name}</p>
-            <h3>{property.bhk_type}</h3>
+            <h3 className="property-title">
+              {property.bhk_type} Flat In {property.location}{" "}
+              {property.landmark_street}, {property.city}, {property.state}
+            </h3>
+            <h3 className="property-name">{property.property_name}</h3>
+            <p className="property-info">
+              Property Type: {property.property_type}
+              <br />
+              Furnishing: {property.furnishing_type}
+              <br />
+              Builtup Area: {property.buildup_area}
+              <br />
+            </p>
 
-            <p>{property.buildup_area}</p>
-            <p>{property.city}</p>
+            <p className="listing-date">
+              Available from: {property.listing_date}
+            </p>
+            <div className="property-buttons">
+              <button onClick={() => handlePropertyClick(property.property_id)}>
+                View Details
+              </button>
+            </div>
           </div>
         ))}
       </div>

@@ -2,10 +2,8 @@ package com.pms.RealEstate.service;
 
 import java.util.List;
 
-
 import com.pms.RealEstate.dto.LoginDto;
 import com.pms.RealEstate.model.Accounts;
-
 
 public interface AccountService {
 
@@ -15,4 +13,7 @@ public interface AccountService {
 
 	Accounts verifyaccount(LoginDto userlogin);
 
+	boolean update(Accounts a);
+
+	boolean updateAccountByEmailId(String emailId, Accounts updatedAccount);
 }

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './SignUp.css';
 import axios from 'axios';
 import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -14,6 +16,8 @@ const SignUp = () => {
   const [role, setRole] = useState('');
 
   const notify = () => toast("Please Enter!");
+
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -35,6 +39,8 @@ const SignUp = () => {
       console.error('Registration error:', error);
       window.alert('Registration failed. Please try again.');
     }
+
+    navigate('/signin');
   };
 
   const clearFormFields = () => {
@@ -48,8 +54,9 @@ const SignUp = () => {
   };
 
   return (
+
     <div className="sign-up">
-      <h2>Sign Up</h2>
+      <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
         <label>Role</label>
@@ -59,7 +66,6 @@ const SignUp = () => {
           onChange={(e) => setRole(e.target.value)}
         >
           <option value="">Select Role</option>
-          <option value="admin">Admin</option>
           <option value="owner">Owner</option>
           <option value="user">User</option>
         </select>
@@ -117,7 +123,7 @@ const SignUp = () => {
             required
           />
         </div>
-        <button onClick={notify}>Sign Up</button>
+        <button className="signup-button" onClick={notify}>Sign Up</button>
 
       </form>
     </div>
