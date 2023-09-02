@@ -16,4 +16,10 @@ public interface AccountService {
 	boolean update(Accounts a);
 
 	boolean updateAccountByEmailId(String emailId, Accounts updatedAccount);
+
+	void deleteaccount(String email_id);
+
+	Accounts getEmailId(String to);
+
+	void resetPassword(String email_id, String first_name, String password);
 }
