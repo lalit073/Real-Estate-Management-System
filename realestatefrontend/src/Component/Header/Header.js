@@ -22,19 +22,34 @@ const Header = () => {
           <li>
             <Link to="/">Home</Link>
           </li>
-          {userRole === "owner" && ( // Render only for owners
+          {/* {userRole === "owner" && ( // Render only for owners
             <li>
               <Link to="/postproperty">Post Properties</Link>
+            </li>
+          )} */}
+
+          {loggedIn && userRole==="owner" ? (
+            <li>
+              <Link to="/postproperty">Post Properties</Link>
+            </li>
+          ) : (
+            
+            <li>
+             
+              
+              <Link to="/signin">Post Properties</Link>
             </li>
           )}
 
           {loggedIn ? (
             <>
               <li>
-                <div>{userId}</div>
+                <Link className="log">{userId}</Link>
               </li>
               <li>
-                <div onClick={handleLogout}>LogOut</div>
+                <Link onClick={handleLogout} className="log"  to="/">
+                  LogOut
+                </Link>
               </li>
             </>
           ) : (

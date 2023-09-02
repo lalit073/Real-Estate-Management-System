@@ -10,27 +10,42 @@ const PropertyPage = () => {
 
   const [properties, setProperties] = useState([]);
 
-  const loggedIn = sessionStorage.getItem("loggedIn")
-  const userId = sessionStorage.getItem("userId")
-  console.log(userId)
-  console.log(loggedIn)
-  
+  const loggedIn = sessionStorage.getItem("loggedIn");
+  const userId = sessionStorage.getItem("userId");
+  console.log(userId);
+  console.log(loggedIn);
 
   useEffect(() => {
     axios
       .get(`http://localhost:8585/properties/search/${searchLocation}`)
       .then((response) => {
-        setProperties(response.data);
-
+        if(searchChoice === "buy"){
+          const city = response.data.filter((e)=>e.buying&&1)
+          setProperties([...city]);
+        }
+        else if(searchChoice === "rent"){
+          const city = response.data.filter((e)=>e.rental&&1)
+          setProperties([...city])
+        }
+        else{
+          const city = response.data;
+          setProperties([...city]);
+        }
         console.log(response.data);
       })
       .catch((error) => {
         console.error("Error fetching properties:", error);
       });
-  }, [searchLocation]);
+  }, [searchLocation,searchChoice]);
 
   const handlePropertyClick = (propertyId) => {
-    navigate(`/property/${propertyId}`);
+    if(loggedIn){
+      navigate(`/property/${propertyId}`);
+    }
+    else{
+      navigate("/signin")
+    }
+   
   };
 
   return (
