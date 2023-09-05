@@ -56,6 +56,11 @@ const PropertyPage = () => {
         {properties.map((property) => (
           <div key={property.property_id} className="property-card">
             <h3 className="property-title">
+
+           <h1>
+            {  property.rental&&1?(<>{"For Rent"}<br></br></>):(<> {"For Sell"}<br></br></>)}
+            </h1>
+
               {property.bhk_type} Flat In {property.location}{" "}
               {property.landmark_street}, {property.city}, {property.state}
             </h3>
@@ -67,6 +72,21 @@ const PropertyPage = () => {
               <br />
               Builtup Area: {property.buildup_area}
               <br />
+             
+
+          {  property.rental&&1?(
+            <>Expected Rent: {property.rental.expected_rent}<br></br> Expected Deposit: {property.rental.expected_deposit}<br></br> 
+            Preferred Tenants: {property.rental.preferred_tenants}
+            
+            </> 
+          
+            
+          ):( <>Expected Rate: {property.buying.expected_rate} <br></br><br></br><br></br>
+                </>
+          
+          )
+          }
+
             </p>
 
             <p className="listing-date">
@@ -74,7 +94,7 @@ const PropertyPage = () => {
             </p>
             <div className="property-buttons">
               <button onClick={() => handlePropertyClick(property.property_id)}>
-                View Details
+                View Owner Details
               </button>
             </div>
           </div>

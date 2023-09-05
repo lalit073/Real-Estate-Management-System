@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,12 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.pms.RealEstate.dto.ResetPasswordDto;
 
+import com.oracle.webservices.internal.api.message.PropertySet.Property;
 import com.pms.RealEstate.dto.LoginDto;
 import com.pms.RealEstate.dto.ResetPasswordDto;
 import com.pms.RealEstate.model.Accounts;
 import com.pms.RealEstate.service.AccountService;
+import com.pms.RealEstate.service.PropertyService;
 
 
 @CrossOrigin(origins="*")
@@ -28,6 +28,9 @@ public class AccountController {
 
 	@Autowired
 	AccountService accountservice;
+	@Autowired
+	PropertyService propertyservice;
+	
 	
 	@PostMapping("/register")
     public ResponseEntity<Accounts> registerUser(@RequestBody Accounts accounts) {
@@ -74,6 +77,11 @@ public class AccountController {
 	@DeleteMapping("/delete/{email_id}")
 	public void deleteByemail(@PathVariable String email_id)
 	{
+		List<com.pms.RealEstate.model.Property> prolist=propertyservice.getPropertyDetailsByEmailId(email_id);
+		for(com.pms.RealEstate.model.Property p:prolist)
+		{
+		  propertyservice.deletepropertybyId(p.getProperty_id());
+		}
 		accountservice.deleteaccount(email_id);
 	}
 	

@@ -215,5 +215,11 @@ public class PropertyServiceImpl implements PropertyService {
 	        return propertydao.findByEmailId(emailId);
 	    }
 
+		@Override
+		public void deletepropertybyIdi(String email_id) {
+			propertydao.deletebyemailid(email_id);
+			
+		}
+
 
 }
